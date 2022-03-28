@@ -21,5 +21,9 @@ require_once "src\dbconnector\dbconnector.php";
 		echo $e;
 	}
 
+	$table = $ins->get_table("users",["fields"=>["*"],"offset"=>-1,"limit"=>-1,"order"=>[],"return_response"=>"json"]); //table name, options
+
+	echo($table);
+
 
  
