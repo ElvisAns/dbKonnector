@@ -1,6 +1,6 @@
 <?php 
 
-require "src\dbconnector\dbconnector.php";
+require_once "src\dbconnector\dbconnector.php";
 		
 	$array_instance=[
 		"dbname" => "atalakuxpress",
@@ -12,7 +12,7 @@ require "src\dbconnector\dbconnector.php";
 		"port"=>3306
 	];
 
-	$ins = new dbconnector(); //use fully qualified name when 
+	$ins = new dbConnector\instance();
 
 	try{
 		$ins->connect($array_instance);

@@ -1,7 +1,9 @@
 <?php
-	
 
-	class dbConnector
+namespace dbConnector;
+use \PDO; //Import PDO as a trait
+
+	class Instance
 	{
 	
 	public $dbh; // handle of the db connexion
