@@ -8,6 +8,9 @@ use \PDO; //Import PDO as a trait
 	{
 	
 	public $dbh; // handle of the db connexion
+	public $username;
+	public $password;
+	public $dsn;
 
     private static $instance;
 
@@ -23,12 +26,17 @@ use \PDO; //Import PDO as a trait
 			$charset = $charset['charset']??"utf8mb4"; //use utf8mb4 as default charset
 
 			$dsn = "${dbtype}:host=${hostname};dbname=${dbname};port=${port};charset=${charset}";
+			
 			$options = [
 			    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
 			    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 			    PDO::ATTR_EMULATE_PREPARES   => false,
 			];
-
+			
+			$this->dsn = $dsn;
+			$this->username = $user;
+			$this->password = $pwd;
+			
 			try 
 			{
 			    $this->dbh = new PDO($dsn, $user, $pwd, $options);
@@ -107,5 +115,20 @@ use \PDO; //Import PDO as a trait
 		public function __destruct(){
 			$this->dbh = null; //close the connexion instance
 		}
+		
+		    private function connect()
+    		{
+        		$this->link = new PDO($this->dsn, $this->username, $this->password);
+    		}
+		
+		public function __sleep()
+	    	{
+			return array('dsn', 'username', 'password');
+	    	}
+
+	    	public function __wakeup()
+	    	{
+			$this->connect();
+	    	}
 
 	}
